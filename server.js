@@ -11,6 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 静态资源托管处理
+app.use(express.static("./public"));
+
 // 调用路由文件，并设置好前缀
 app.use("/posts", postRouter);
 
