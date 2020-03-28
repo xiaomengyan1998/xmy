@@ -7,6 +7,10 @@ const postRouter = require("./routers/postRouter");
 // 实例化一个express的实例
 const app = express();
 
+// req.body 中间件处理
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // 调用路由文件，并设置好前缀
 app.use("/posts", postRouter);
 
