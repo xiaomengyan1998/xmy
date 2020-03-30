@@ -4,17 +4,12 @@
 const PostModel = require("../models/postModel");
 
 /**
- * 获取帖子列表
+ * 查询帖子
  */
 exports.index = async (req, res) => {
   // Model.find()
-  try {
-    const data = await PostModel.find();
-    res.send({ code: 0, msg: "成功", data: data });
-  } catch (error) {
-    console.log(error);
-    res.send({ code: -1, msg: "失败" });
-  }
+  const data = await PostModel.find();
+  res.send({ code: 0, msg: "成功", data: data });
 };
 
 /**
@@ -45,13 +40,8 @@ exports.create = async (req, res) => {
   //     });
   //   });
 
-  try {
-    await PostModel.create({ title, content });
-    res.send({ code: 0, msg: "成功" });
-  } catch (error) {
-    console.log(error);
-    res.send({ code: -1, msg: "失败" });
-  }
+  await PostModel.create({ title, content });
+  res.send({ code: 0, msg: "成功" });
 };
 
 /**
@@ -65,14 +55,9 @@ exports.update = async (req, res) => {
   // const { title, content } = req.body;
 
   // Model.updateOne()
-  try {
-    // await PostModel.updateOne({ _id: id }, { title: title, content: content });
-    await PostModel.updateOne({ _id: id }, req.body); // { content: '2' }
-    res.send({ code: 0, msg: "成功" });
-  } catch (error) {
-    console.log(error);
-    res.send({ code: -1, msg: "失败" });
-  }
+  // await PostModel.updateOne({ _id: id }, { title: title, content: content });
+  await PostModel.updateOne({ _id: id }, req.body); // { content: '2' }
+  res.send({ code: 0, msg: "成功" });
 };
 
 /**
@@ -83,11 +68,6 @@ exports.remove = async (req, res) => {
   const { id } = req.params;
 
   // Model.deleteOne()
-  try {
-    await PostModel.deleteOne({ _id: id });
-    res.send({ code: 0, msg: "成功" });
-  } catch (error) {
-    console.log(error);
-    res.send({ code: -1, msg: "失败" });
-  }
+  await PostModel.deleteOne({ _id: id });
+  res.send({ code: 0, msg: "成功" });
 };
