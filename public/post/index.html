@@ -50,11 +50,16 @@
   <div class="container my-5">
     <h1 class="mb-5">帖子列表</h1>
 
+    <!-- 
+      form 表单有默认提交的行为，
+      我们这里是通过 ajax 来做搜索。所以需要将 form 表单默认行为给阻止
+      action="javascript:;"
+    -->
     <form class="form-inline mb-5" action="javascript:;">
       <div class="form-group mr-2">
-        <input type="text" class="form-control" placeholder="Title" />
+        <input id="search-input" type="text" class="form-control" placeholder="Title" />
       </div>
-      <button type="submit" class="btn btn-primary">Seach</button>
+      <button id="search-btn" type="submit" class="btn btn-primary">Seach</button>
     </form>
 
     <ul class="list-group list-group-flush">

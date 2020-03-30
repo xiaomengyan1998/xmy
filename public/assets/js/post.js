@@ -4,6 +4,7 @@ $(function() {
   var pageNum = 1; // 当前页码数
   var pageSize = 5; // 每页显示条数
   var totalPage = 1; // 总的页数
+  var searchTitle = ""; // 标题搜索关键字
 
   // 定义一个 getData 的方法专门去发送 ajax 请求获取数据
   function getData() {
@@ -11,7 +12,8 @@ $(function() {
       "http://localhost:3000/posts",
       {
         pageNum: pageNum,
-        pageSize: pageSize
+        pageSize: pageSize,
+        title: searchTitle
       },
       function(res) {
         console.log(res);
@@ -91,6 +93,21 @@ $(function() {
     // 将 toPage 赋值给 pageNum
     pageNum = toPage;
     // 再调用 getData
+    getData();
+  });
+
+  // 搜索
+  $("#search-btn").click(function() {
+    // 获取搜索关键字
+    var value = $("#search-input").val();
+
+    // 将 value 赋值给 searchTitle
+    searchTitle = value;
+
+    // 将 pageNum 重置为 1
+    pageNum = 1;
+
+    // 发送ajax请求了。还是去调用 getData() 这个方法，但是这个方法需要修改点内容
     getData();
   });
 });

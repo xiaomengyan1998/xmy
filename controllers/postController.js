@@ -10,16 +10,26 @@ exports.index = async (req, res) => {
   // 获取前端传递过来的分页的数据 pageNum、pageSize  query
   const pageNum = parseInt(req.query.pageNum) || 1; // 页码
   const pageSize = parseInt(req.query.pageSize) || 2; // 每页显示条数
+  // 获取前端传递过来的搜索的数据 title
+  const title = req.query.title;
 
   // 查询数据库 Model.find().skip( (pageNum - 1) * pageSize ).limit( pageSize )
-  const data = await PostModel.find()
+  // /title/ 这样是去模糊搜索 标题中包含有  title 这个字符串的数据
+  // 而我们想要的是 标题中包含有 title 这个变量所代表的值 的数据
+  // 这时需要使用正则对象来生成正则表达式 title = 张三  new RegExp(title) => /张三/
+  //                                   title = 李四  new RegExp(title) => /李四/
+  // 为什么这里用这种模板字符串不行 `/${title}/` =>  "/李四/"  这时就不是正则表达式，做的是精准匹配
+  //          /`${title}`/    /"张三"/
+  const data = await PostModel.find({ title: new RegExp(title) })
     .skip((pageNum - 1) * pageSize)
     .limit(pageSize);
 
   // 前端还需要知道一共有多少页，需要后台告诉他
   // totalPage = Math.ceil(总条数 / 每页显示条数) = Math.ceil(总条数 / pageSize)
   // 先计算出总条数 total
-  const total = await PostModel.find().countDocuments();
+  const total = await PostModel.find({
+    title: new RegExp(title)
+  }).countDocuments();
   // console.log(total);
   // 再计算出 totalPage
   const totalPage = Math.ceil(total / pageSize);
