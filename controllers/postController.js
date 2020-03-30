@@ -51,6 +51,7 @@ exports.index = async (req, res) => {
 exports.create = async (req, res) => {
   // 获取前端传递过来的参数
   const { title, content } = req.body;
+  // console.log(req.body)
 
   // Model.create()
   // PostModel.create({
@@ -83,7 +84,7 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   // 要更新的帖子的Id
   const { id } = req.params;
-  console.log(req)
+  // console.log(req)
 
   // 更新的内容 req.body
   // const { title, content } = req.body;
