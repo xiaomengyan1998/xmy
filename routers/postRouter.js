@@ -7,7 +7,8 @@ const {
   index,
   create,
   update,
-  remove
+  remove,
+  show
 } = require("../controllers/postController");
 
 // 生成 express.Router 的实例
@@ -63,6 +64,15 @@ router.put("/:id", update);
  * @apiSuccess {String} msg  错误消息.
  */
 router.delete("/:id", remove);
+
+/**
+ * @api {get} http://localhost:3000/posts/:id 帖子详情
+ * @apiGroup Post
+ *
+ * @apiSuccess {Number} code 错误状态码.
+ * @apiSuccess {String} msg  错误消息.
+ */
+router.get("/:id", show);
 
 // 暴露 router 的实例
 module.exports = router;

@@ -104,3 +104,16 @@ exports.remove = async (req, res) => {
   await PostModel.deleteOne({ _id: id });
   res.send({ code: 0, msg: "成功" });
 };
+
+/**
+ * 帖子详情
+ */
+exports.show = async (req, res) => {
+  // 获取Id
+  const { id } = req.params;
+
+  // Model.find() => []
+  // Model.findOne()  => {}
+  const data = await PostModel.findOne({ _id: id });
+  res.send({ code: 0, msg: "ok", data });
+};
