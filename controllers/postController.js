@@ -7,9 +7,32 @@ const PostModel = require("../models/postModel");
  * 查询帖子
  */
 exports.index = async (req, res) => {
-  // Model.find()
-  const data = await PostModel.find();
-  res.send({ code: 0, msg: "成功", data: data });
+  // 获取前端传递过来的分页的数据 pageNum、pageSize  query
+  const pageNum = parseInt(req.query.pageNum) || 1; // 页码
+  const pageSize = parseInt(req.query.pageSize) || 2; // 每页显示条数
+
+  // 查询数据库 Model.find().skip( (pageNum - 1) * pageSize ).limit( pageSize )
+  const data = await PostModel.find()
+    .skip((pageNum - 1) * pageSize)
+    .limit(pageSize);
+
+  // 前端还需要知道一共有多少页，需要后台告诉他
+  // totalPage = Math.ceil(总条数 / 每页显示条数) = Math.ceil(总条数 / pageSize)
+  // 先计算出总条数 total
+  const total = await PostModel.find().countDocuments();
+  // console.log(total);
+  // 再计算出 totalPage
+  const totalPage = Math.ceil(total / pageSize);
+
+  // 响应
+  res.send({
+    code: 0,
+    msg: "ok",
+    data: {
+      list: data,
+      totalPage: totalPage
+    }
+  });
 };
 
 /**
