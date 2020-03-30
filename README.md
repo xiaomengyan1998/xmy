@@ -53,10 +53,10 @@ $ apidoc -i ./routers -o ./public/docs
 在 server.js 定义一个错误处理中间件。放在最后
 
 ```javascript
-app.use(function (err, req, res, next) {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 ```
 
 为了能够处理 async await 产生的异常，还需要去使用一个依赖包 express-async-errors
@@ -66,4 +66,3 @@ $ npm install express-async-errors
 ```
 
 在 server.js 中头部引入这个包即可
-
