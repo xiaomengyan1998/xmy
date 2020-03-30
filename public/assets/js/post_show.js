@@ -30,7 +30,7 @@ $(function() {
               <a href="./edit.html" class="nav-link btn btn-link">Edit</a>
             </li>
             <li class="nav-item">
-              <a href="javascript:;" class="nav-link btn btn-link">Delete</a>
+              <a id="delete-post" href="javascript:;" class="nav-link btn btn-link">Delete</a>
             </li>
           </ul>
         </div>
@@ -38,4 +38,21 @@ $(function() {
       $(".container").html(html);
     }
   });
+
+  // 删除功能
+  $('.container').on('click', '#delete-post', function() {
+    let url = `http://localhost:3000/posts/${result.id}`
+    $.ajax({
+      url,
+      type: 'delete',
+      success: function(res) {
+        if(res.code === 0) {
+          window.location.href = './index.html'
+        }else {
+          console.log(res)
+        }
+        console.log(res)
+      }
+    })
+  })
 });
