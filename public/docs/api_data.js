@@ -4,6 +4,19 @@ define({ "api": [
     "url": "http://localhost:3000/posts/:id",
     "title": "删除帖子",
     "group": "Post",
+    "parameter": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token信息</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -202,7 +215,6 @@ define({ "api": [
     "type": "put",
     "url": "http://localhost:3000/posts/:id",
     "title": "编辑帖子",
-    "name": "update",
     "group": "Post",
     "parameter": {
       "fields": {
@@ -220,6 +232,15 @@ define({ "api": [
             "optional": false,
             "field": "content",
             "description": "<p>帖子内容</p>"
+          }
+        ],
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token信息</p>"
           }
         ]
       }
@@ -246,7 +267,8 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "routers/postRouter.js",
-    "groupTitle": "Post"
+    "groupTitle": "Post",
+    "name": "PutHttpLocalhost3000PostsId"
   },
   {
     "type": "post",

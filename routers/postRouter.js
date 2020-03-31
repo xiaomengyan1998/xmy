@@ -47,25 +47,27 @@ router.post("/", auth, create);
 
 /**
  * @api {put} http://localhost:3000/posts/:id 编辑帖子
- * @apiName update
  * @apiGroup Post
  *
  * @apiParam {String} title 帖子标题
  * @apiParam {String} content 帖子内容
+ * @apiParam (Headers) {String} Authorization token信息
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
  */
-router.put("/:id", update);
+router.put("/:id", auth, update);
 
 /**
  * @api {delete} http://localhost:3000/posts/:id 删除帖子
  * @apiGroup Post
  *
+ * @apiParam (Headers) {String} Authorization token信息
+ *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
  */
-router.delete("/:id", remove);
+router.delete("/:id", auth, remove);
 
 /**
  * @api {get} http://localhost:3000/posts/:id 帖子详情
