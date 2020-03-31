@@ -40,6 +40,36 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = (req, res) => {
-  res.send("用户登录");
+// exports.login = async (req, res) => {
+//   // 获取前端传递过来的 email 与 password
+//   const { email, password } = req.body;
+//   // 查询数据库，email 与 password 能否匹配数据库中现有的数据
+//   const data = await UserModel.findOne({ email, password });
+//   // 判断 data 是否有值
+//   if (!data) {
+//     res.send({ code: -1, msg: "用户邮箱或密码不正确" });
+//   } else {
+//     res.send({ code: 0, msg: "登录成功", data });
+//   }
+// };
+
+exports.login = async (req, res) => {
+  // 获取前端传递过来的 email 与 password
+  const { email, password } = req.body;
+  // 根据 email 去查询数据库
+  const data = await UserModel.findOne({ email });
+  // 判断 data 是否有值
+  if (!data) {
+    res.send({ code: -1, msg: "用户邮箱不正确" });
+    return;
+  }
+
+  // 校验密码是否正确 bcryptjs
+  if (!data.comparePassword(password)) {
+    // 校验不通过
+    res.send({ code: -1, msg: "密码不正确" });
+    return;
+  }
+
+  res.send({ code: 0, msg: "登录成功" });
 };

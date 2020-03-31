@@ -53,6 +53,21 @@ userSchema.pre("save", function(next) {
   next();
 });
 
+// 给 UserModel 的实例（document）用户。添加一个实例方法
+userSchema.methods.hello = function() {
+  console.log("hello");
+  console.log(this);
+};
+
+/**
+ * 校验密码
+ * @param {String} password 原密码
+ */
+userSchema.methods.comparePassword = function(password) {
+  // bcryptjs.compareSync(原密码, 已经加密的密码)
+  return bcryptjs.compareSync(password, this.password);
+};
+
 const UserModel = mongoose.model("user", userSchema);
 
 module.exports = UserModel;
