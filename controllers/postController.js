@@ -51,6 +51,7 @@ exports.index = async (req, res) => {
 exports.create = async (req, res) => {
   // 获取前端传递过来的参数
   const { title, content } = req.body;
+  // console.log(req.body)
 
   // Model.create()
   // PostModel.create({
@@ -83,14 +84,16 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
   // 要更新的帖子的Id
   const { id } = req.params;
+  // console.log(req)
 
   // 更新的内容 req.body
   // const { title, content } = req.body;
 
   // Model.updateOne()
   // await PostModel.updateOne({ _id: id }, { title: title, content: content });
-  await PostModel.updateOne({ _id: id }, req.body); // { content: '2' }
-  res.send({ code: 0, msg: "成功" });
+  await PostModel.updateMany({ _id: id }, req.body); // { content: '2' }
+  const data = await PostModel.findOne({ _id: id });
+  res.send({ code: 0, msg: "成功", data });
 };
 
 /**

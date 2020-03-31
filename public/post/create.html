@@ -49,14 +49,14 @@
 
   <div class="container my-5">
     <h1 class="mb-5">发表帖子</h1>
-    <form action="#" method="POST">
+    <form action="javascript:;" method="POST">
       <div class="form-group">
         <label>标题</label>
-        <input type="text" class="form-control" name="title" placeholder="请输入标题" />
+        <input id="form-title" type="text" class="form-control" name="title" placeholder="请输入标题" />
       </div>
       <div class="form-group">
         <label>正文</label>
-        <textarea class="form-control" name="content" rows="8" cols="80" placeholder="请输入正文"></textarea>
+        <textarea id="form-content" class="form-control" name="content" rows="8" cols="80" placeholder="请输入正文"></textarea>
       </div>
       <div class="form-group">
         <label>标签</label>
@@ -73,12 +73,14 @@
       </div>
       <div class="form-group d-flex justify-content-end">
         <button class="btn btn-info ml-2" type="reset">Reset</button>
-        <button class="btn btn-primary ml-2" type="submit">Submit</button>
+        <button id="create-post" class="btn btn-primary ml-2" type="submit">Submit</button>
       </div>
     </form>
   </div>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/assets/js/common.js""></script>
+<script src="/assets/js/post_create.js""></script>
 
 </html>
