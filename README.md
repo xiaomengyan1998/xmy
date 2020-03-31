@@ -66,3 +66,11 @@ $ npm install express-async-errors
 ```
 
 在 server.js 中头部引入这个包即可
+
+## 六、api 接口的校验
+
+创建帖子时，必须登录才可以创建。对后端的 api 接口来说，也就是必须在请求头中携带一个 token 。我们校验 token 是否 OK.
+
+ok 的话才允许你创建帖子。
+
+否则不能创建帖子，并返回 401 状态码

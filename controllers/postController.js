@@ -2,6 +2,7 @@
 
 // 引入 PostModel
 const PostModel = require("../models/postModel");
+const jsonwebtoken = require("jsonwebtoken");
 
 /**
  * 查询帖子
@@ -48,34 +49,70 @@ exports.index = async (req, res) => {
 /**
  * 创建帖子
  */
+// exports.create = async (req, res) => {
+//   // 获取前端传递过来的参数
+//   const { title, content } = req.body;
+//   // console.log(req.body)
+
+//   // Model.create()
+//   // PostModel.create({
+//   //   title,
+//   //   content
+//   // })
+//   //   .then(() => {
+//   //     // 成功
+//   //     res.send({
+//   //       code: 0,
+//   //       msg: "成功"
+//   //     });
+//   //   })
+//   //   .catch(error => {
+//   //     // 失败
+//   //     console.log(error);
+//   //     res.send({
+//   //       code: -1,
+//   //       msg: "失败"
+//   //     });
+//   //   });
+
+//   await PostModel.create({ title, content });
+//   res.send({ code: 0, msg: "成功" });
+// };
+
 exports.create = async (req, res) => {
-  // 获取前端传递过来的参数
-  const { title, content } = req.body;
-  // console.log(req.body)
+  /**
+   * 验证token是否存在并有效
+   *
+   * 1. 获取传递过来的token  query ? body ? param ?
+   *    都不行，需要从请求头中获取。req.get('xxx')
+   *          xxx 一般设置为 Authorization  。access_token  token
+   *
+   * const token = req.get('Authorization')
+   *
+   * 2. 判断 token 是否存在
+   */
 
-  // Model.create()
-  // PostModel.create({
-  //   title,
-  //   content
-  // })
-  //   .then(() => {
-  //     // 成功
-  //     res.send({
-  //       code: 0,
-  //       msg: "成功"
-  //     });
-  //   })
-  //   .catch(error => {
-  //     // 失败
-  //     console.log(error);
-  //     res.send({
-  //       code: -1,
-  //       msg: "失败"
-  //     });
-  //   });
+  const token = req.get("Authorization");
 
-  await PostModel.create({ title, content });
-  res.send({ code: 0, msg: "成功" });
+  if (token) {
+    // 存在, 还要去校验token是否有效
+    jsonwebtoken.verify(token, "MYGOD", async (err, data) => {
+      if (err) {
+        // 校验失败
+        res.status(401).send("身份验证失败");
+      } else {
+        // 校验成功， 再去做你后续的操作
+
+        const { title, content } = req.body;
+
+        await PostModel.create({ title, content });
+        res.send({ code: 0, msg: "成功" });
+      }
+    });
+  } else {
+    // 不存在
+    res.status(401).send("请携带token");
+  }
 };
 
 /**
