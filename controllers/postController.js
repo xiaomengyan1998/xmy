@@ -116,9 +116,14 @@ exports.index = async (req, res) => {
 // };
 
 exports.create = async (req, res) => {
-  const { title, content } = req.body;
+  // const { title, content, userId } = req.body;
+  // await PostModel.create({ title, content, userId });
 
-  await PostModel.create({ title, content });
+  // 获取出 req.auth 中的 userId
+  const { userId } = req.auth;
+  req.body.userId = userId;
+
+  await PostModel.create(req.body);
   res.send({ code: 0, msg: "成功" });
 };
 

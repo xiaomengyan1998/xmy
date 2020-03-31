@@ -15,6 +15,12 @@ module.exports = (req, res, next) => {
         res.status(401).send("身份验证失败");
       } else {
         // 校验成功， 再去做你后续的操作
+        // console.log(data); // data 中的信息就是之前生成token时的 payload { userId: xxxx, nickname: 'yyyy', iat: '', exp: '' }
+        // data.userId 我需要拿到后续步骤中去使用
+        // 回忆中间件的很重要的一件事：在 req 与 res 身上添加属性或方法
+
+        req.auth = data;
+
         next();
       }
     });
