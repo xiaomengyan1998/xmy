@@ -142,8 +142,7 @@
   {
     "type": "post",
     "url": "http://localhost:3000/posts",
-    "title": "创建一个帖子",
-    "name": "create",
+    "title": "创建帖子",
     "group": "Post",
     "parameter": {
       "fields": {
@@ -161,6 +160,15 @@
             "optional": false,
             "field": "content",
             "description": "<p>帖子内容</p>"
+          }
+        ],
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>token信息</p>"
           }
         ]
       }
@@ -187,7 +195,8 @@
     },
     "version": "0.0.0",
     "filename": "routers/postRouter.js",
-    "groupTitle": "Post"
+    "groupTitle": "Post",
+    "name": "PostHttpLocalhost3000Posts"
   },
   {
     "type": "put",
