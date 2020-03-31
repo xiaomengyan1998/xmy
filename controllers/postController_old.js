@@ -21,12 +21,7 @@ exports.index = async (req, res) => {
   //                                   title = 李四  new RegExp(title) => /李四/
   // 为什么这里用这种模板字符串不行 `/${title}/` =>  "/李四/"  这时就不是正则表达式，做的是精准匹配
   //          /`${title}`/    /"张三"/
-
-  // populate(字段名, 字段选择) 中文意思叫做填充，接受的 userId 是 PostModel 的 schema 中定义的一个字段名字
-  // 并且这个 userId 字段关联的是 user 模型。
-  // 所以这块会将 userId 填充为 对应的用户信息
   const data = await PostModel.find({ title: new RegExp(title) })
-    .populate("userId", ["nickname", "email"])
     .skip((pageNum - 1) * pageSize)
     .limit(pageSize);
 
@@ -50,6 +45,75 @@ exports.index = async (req, res) => {
     }
   });
 };
+
+/**
+ * 创建帖子
+ */
+// exports.create = async (req, res) => {
+//   // 获取前端传递过来的参数
+//   const { title, content } = req.body;
+//   // console.log(req.body)
+
+//   // Model.create()
+//   // PostModel.create({
+//   //   title,
+//   //   content
+//   // })
+//   //   .then(() => {
+//   //     // 成功
+//   //     res.send({
+//   //       code: 0,
+//   //       msg: "成功"
+//   //     });
+//   //   })
+//   //   .catch(error => {
+//   //     // 失败
+//   //     console.log(error);
+//   //     res.send({
+//   //       code: -1,
+//   //       msg: "失败"
+//   //     });
+//   //   });
+
+//   await PostModel.create({ title, content });
+//   res.send({ code: 0, msg: "成功" });
+// };
+
+// exports.create = async (req, res) => {
+//   /**
+//    * 验证token是否存在并有效
+//    *
+//    * 1. 获取传递过来的token  query ? body ? param ?
+//    *    都不行，需要从请求头中获取。req.get('xxx')
+//    *          xxx 一般设置为 Authorization  。access_token  token
+//    *
+//    * const token = req.get('Authorization')
+//    *
+//    * 2. 判断 token 是否存在
+//    */
+
+//   const token = req.get("Authorization");
+
+//   if (token) {
+//     // 存在, 还要去校验token是否有效
+//     jsonwebtoken.verify(token, "MYGOD", async (err, data) => {
+//       if (err) {
+//         // 校验失败
+//         res.status(401).send("身份验证失败");
+//       } else {
+//         // 校验成功， 再去做你后续的操作
+
+//         const { title, content } = req.body;
+
+//         await PostModel.create({ title, content });
+//         res.send({ code: 0, msg: "成功" });
+//       }
+//     });
+//   } else {
+//     // 不存在
+//     res.status(401).send("请携带token");
+//   }
+// };
 
 exports.create = async (req, res) => {
   // const { title, content, userId } = req.body;
@@ -102,9 +166,6 @@ exports.show = async (req, res) => {
 
   // Model.find() => []
   // Model.findOne()  => {}
-  const data = await PostModel.findOne({ _id: id }).populate("userId", [
-    "nickname",
-    "email"
-  ]);
+  const data = await PostModel.findOne({ _id: id });
   res.send({ code: 0, msg: "ok", data });
 };

@@ -15,7 +15,7 @@ $(function() {
   // });
 
   // console.log(herfId);
-  let herfId = getHerfId(window.location.href)
+  let herfId = getHerfId(window.location.href);
 
   // 直接发送ajax请求获取详情数据
   var url = `http://localhost:3000/posts/${herfId}`;
@@ -25,6 +25,9 @@ $(function() {
       var html = `
         <h1 class="mb-5 font-weight-light">${data.title}</h1>
         <div class="py-4">${data.content}</div>
+        <div class="mt-2 text-black-50">
+          <small>${data.userId.nickname}</small>
+        </div>
         <div class="border-top py-4 mt-4">
           <ul class="nav justify-content-end">
             <li class="nav-item">
@@ -41,18 +44,18 @@ $(function() {
   });
 
   // 删除功能
-  $('.container').on('click', '#delete-post', function() {
-    let url = `http://localhost:3000/posts/${herfId}`
+  $(".container").on("click", "#delete-post", function() {
+    let url = `http://localhost:3000/posts/${herfId}`;
     $.ajax({
       url,
-      type: 'delete',
+      type: "delete",
       success: function(res) {
-        if(res.code === 0) {
-          window.location.href = './index.html'
-        }else {
-          console.log(res)
+        if (res.code === 0) {
+          window.location.href = "./index.html";
+        } else {
+          console.log(res);
         }
       }
-    })
-  })
+    });
+  });
 });
