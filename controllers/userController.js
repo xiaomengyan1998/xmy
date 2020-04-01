@@ -1,4 +1,6 @@
 const UserModel = require("../models/userModel");
+const path = require("path");
+const fs = require("fs");
 const jsonwebtoken = require("jsonwebtoken");
 
 // exports.register = async (req, res) => {
@@ -96,4 +98,49 @@ exports.login = async (req, res) => {
   );
 
   res.send({ code: 0, msg: "登录成功", token });
+};
+
+exports.getInfo = async (req, res) => {
+  // 1. 获取用户 id，通过 req.auth
+  const { userId } = req.auth;
+  // 2. 查询数据库即可
+  // { passwod: 0 } 是讲 password 字段在返回中剔除掉
+  const data = await UserModel.findOne({ _id: userId }, { password: 0 });
+  // 3. 响应
+  res.send({
+    code: 0,
+    msg: "OK",
+    data
+  });
+};
+
+exports.update = async (req, res) => {
+  // 1. 获取用户Id
+  const { userId } = req.auth;
+  // 定义一个后续有来修改的对象
+  let updateData = {};
+  // 2. 判断是否有传递头像过来
+  if (req.file.path) {
+    // 2.1 定义 newFilename 与 newFilepath
+    const newFilename = `${req.file.filename}-${req.file.originalname}`;
+    const newFilepath = path.resolve(__dirname, "../public", newFilename);
+
+    // 2.2 读文件
+    const fileData = fs.readFileSync(req.file.path);
+
+    // 2.3 写文件
+    fs.writeFileSync(newFilepath, fileData);
+
+    // 2.4 给 updateData 中设置 avatar
+    updateData.avatar = `http://localhost:3000/${newFilename}`;
+  }
+  // 3. 修改数据库
+  await UserModel.updateOne({ _id: userId }, updateData);
+  const data = await UserModel.findOne({ _id: userId }, { password: 0 });
+  // 4. 响应给前端
+  res.send({
+    code: 0,
+    msg: "修改成功",
+    data
+  });
 };
