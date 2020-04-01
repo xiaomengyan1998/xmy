@@ -63,6 +63,13 @@
             "optional": false,
             "field": "msg",
             "description": "<p>错误消息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>更新完成之后的帖子信息.</p>"
           }
         ]
       }
@@ -261,6 +268,13 @@
             "optional": false,
             "field": "msg",
             "description": "<p>错误消息.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>更新完成之后的帖子信息.</p>"
           }
         ]
       }

@@ -55,6 +55,7 @@ router.post("/", auth, create);
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
+ * @apiSuccess {Object} data 更新完成之后的帖子信息.
  */
 router.put("/:id", auth, update);
 
@@ -75,6 +76,7 @@ router.delete("/:id", auth, remove);
  *
  * @apiSuccess {Number} code 错误状态码.
  * @apiSuccess {String} msg  错误消息.
+ * @apiSuccess {Object} data 更新完成之后的帖子信息.
  */
 router.get("/:id", show);
 
