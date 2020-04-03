@@ -42,8 +42,9 @@ function needLogin() {
  */
 function getUserInfo() {
   return new Promise((resolve, reject) => {
+    // process.env.BASEURL 只能用在 nodejs
     $.ajax({
-      url: "http://localhost:3000/getInfo",
+      url: "/getInfo",
       type: "GET",
       headers: {
         Authorization: Cookies.get("token")

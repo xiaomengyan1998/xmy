@@ -132,7 +132,7 @@ exports.update = async (req, res) => {
     fs.writeFileSync(newFilepath, fileData);
 
     // 2.4 给 updateData 中设置 avatar
-    updateData.avatar = `http://localhost:3000/${newFilename}`;
+    updateData.avatar = `${process.env.BASEURL}/${newFilename}`;
   }
   // 3. 修改数据库
   await UserModel.updateOne({ _id: userId }, updateData);

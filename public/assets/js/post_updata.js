@@ -19,7 +19,7 @@ $(function() {
   // });
 
   $.ajax({
-    url: `http://localhost:3000/posts/${herfId}`,
+    url: `/posts/${herfId}`,
     type: "get",
     success: function(res) {
       // console.log(res)
@@ -31,7 +31,7 @@ $(function() {
 
   $("#update-post").click(() => {
     $.ajax({
-      url: `http://localhost:3000/posts/${herfId}`,
+      url: `/posts/${herfId}`,
       type: "put",
       dataType: "json",
       contentType: "application/json;charset=utf-8",
